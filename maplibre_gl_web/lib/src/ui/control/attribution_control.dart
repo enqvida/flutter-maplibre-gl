@@ -44,7 +44,8 @@ class AttributionControl extends JsObjectWrapper<AttributionControlJsImpl> {
   onRemove() => jsObject.onRemove();
 
   /// Whether the attached attribution control is expanded.
-  bool get expanded => jsObject.container.open;
+  bool get expanded =>
+      jsObject.container.classList.contains('maplibregl-compact-show');
 
   /// Sets the attached compact control's state without changing its credits.
   ///

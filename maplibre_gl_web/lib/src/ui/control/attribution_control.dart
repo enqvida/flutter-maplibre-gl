@@ -1,4 +1,5 @@
 import 'dart:js_interop';
+
 import 'package:maplibre_gl_web/src/interop/interop.dart';
 import 'package:maplibre_gl_web/src/interop/ui/control/attribution_control_interop.dart';
 import 'package:maplibre_gl_web/src/ui/map.dart';
@@ -19,7 +20,7 @@ class AttributionControlOptions
   AttributionControlOptions.fromJsObject(super.jsObject) : super.fromJsObject();
 }
 
-/// A `AttributionControl` control contains zoom buttons and a compass.
+/// An `AttributionControl` contains the map source credits.
 ///
 /// @implements {IControl}
 /// @param {Object} [options]
@@ -41,6 +42,22 @@ class AttributionControl extends JsObjectWrapper<AttributionControlJsImpl> {
   onAdd(MapLibreMap map) => jsObject.onAdd(map.jsObject);
 
   onRemove() => jsObject.onRemove();
+
+  /// Whether the attached attribution control is expanded.
+  bool get expanded => jsObject.container.open;
+
+  /// Sets the attached compact control's state without changing its credits.
+  ///
+  /// Call after adding the control to the map. Establish compact mode even if
+  /// the style has not supplied attribution yet, so MapLibre GL JS does not
+  /// expand the control when its first source credits arrive.
+  void setExpanded(bool expanded) {
+    final container = jsObject.container;
+    container.classList
+      ..add('maplibregl-compact')
+      ..toggle('maplibregl-compact-show', expanded);
+    container.open = expanded;
+  }
 
   /// Creates a new MapOptions from a [jsObject].
   AttributionControl.fromJsObject(super.jsObject) : super.fromJsObject();

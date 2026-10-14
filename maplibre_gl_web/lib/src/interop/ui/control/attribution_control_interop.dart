@@ -2,7 +2,9 @@
 library;
 
 import 'dart:js_interop';
+
 import 'package:maplibre_gl_web/src/interop/ui/map_interop.dart';
+import 'package:web/web.dart' as web;
 
 extension type AttributionControlOptionsJsImpl._(JSObject _)
     implements JSObject {
@@ -36,6 +38,8 @@ class AttributionControlJsImpl {
 
 extension AttributionControlJsImplExtension on AttributionControlJsImpl {
   external AttributionControlOptionsJsImpl get options;
+  @JS('_container')
+  external web.HTMLDetailsElement get container;
   external JSAny? onAdd(MapLibreMapJsImpl map);
   external void onRemove();
 }

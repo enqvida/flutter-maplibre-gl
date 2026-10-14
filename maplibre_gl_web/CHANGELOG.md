@@ -1,5 +1,11 @@
 See the [top-level CHANGELOG](https://github.com/maplibre/flutter-maplibre-gl/blob/main/CHANGELOG.md) for full details.
 
+## [Unreleased]
+
+### Changed
+* Web attribution starts collapsed to an information button at every map width,
+  retaining linked source credits and the user's expansion state across updates.
+
 ## [0.27.1](https://github.com/maplibre/flutter-maplibre-gl/compare/v0.27.0...v0.27.1)
 
 ### Fixed

@@ -47,6 +47,7 @@ class MapLibreMapController extends MapLibrePlatform
   String? _navigationControlPosition;
   NavigationControl? _navigationControl;
   AttributionControl? _attributionControl;
+  String? _attributionControlPosition;
   ScaleControl? _scaleControl;
   String? _scaleControlPosition;
   Timer? lastResizeObserverTimer;
@@ -1204,15 +1205,28 @@ class MapLibreMapController extends MapLibrePlatform
         positionString = 'bottom-left';
     }
 
+    // Unrelated widget updates must not reset the user's attribution choice.
+    if (_attributionControl != null &&
+        _attributionControlPosition == positionString) {
+      return;
+    }
+
+    final expanded = _attributionControl?.expanded ?? false;
     _removeAttributionButton();
-    _attributionControl = AttributionControl(AttributionControlOptions());
-    _map.addControl(_attributionControl, positionString);
+    final control = AttributionControl(
+      AttributionControlOptions(compact: true),
+    );
+    _map.addControl(control, positionString);
+    control.setExpanded(expanded);
+    _attributionControl = control;
+    _attributionControlPosition = positionString;
   }
 
   void _removeAttributionButton() {
     if (_attributionControl != null) {
       _map.removeControl(_attributionControl);
       _attributionControl = null;
+      _attributionControlPosition = null;
     }
   }
 
